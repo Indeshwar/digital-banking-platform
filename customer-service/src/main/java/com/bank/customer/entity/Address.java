@@ -23,7 +23,7 @@ public class Address {
     private Customer customer;
 
     @Column(name="address_line1", nullable = false, length = 200)
-    private String AddressLine1;
+    private String addressLine1;
 
     @Column(nullable = false, length = 100)
     private String city;
