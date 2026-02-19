@@ -6,6 +6,7 @@ import lombok.*;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name="customers")
@@ -31,6 +32,15 @@ public class Customer {
 
     @Column(name="phone", nullable = false, length = 20)
     private String phone;
+
+    @OneToMany(
+            mappedBy = "customer", //Establish bidirectional relationship with Customer and Address. Address contains customer field with Many-to-One relationship with foreign key
+            cascade = CascadeType.ALL, //It allows to perform all the EntityManager Operation such as persist, merge from Customer to associate entities.
+            orphanRemoval = true // It allows to delete child entities even if parent itself is not deleted
+
+    )
+    private List<Address> addresses;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name="kyc_status", nullable = false, length = 20)
