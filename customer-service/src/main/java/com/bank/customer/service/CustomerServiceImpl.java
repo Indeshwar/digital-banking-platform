@@ -138,10 +138,23 @@ public class CustomerServiceImpl implements CustomerService {
         Customer updateCustomer = existingCustomer.get();
 
         //Set the update data
-        updateCustomer.setFirstName(request.getFirstName());
-        updateCustomer.setLastName(request.getLastName());
-        updateCustomer.setEmail(request.getEmail());
-        updateCustomer.setPhone(request.getPhone());
+        if(!request.getFirstName().isEmpty()){
+            updateCustomer.setFirstName(request.getFirstName());
+        }
+
+        if(!request.getLastName().isEmpty()){
+            updateCustomer.setLastName(request.getLastName());
+        }
+
+        if(!request.getEmail().isEmpty()){
+            updateCustomer.setEmail(request.getEmail());
+        }
+
+        if(!request.getPhone().isEmpty()){
+            updateCustomer.setPhone(request.getPhone());
+        }
+
+
 
         //save the update data in database
         Customer customer = customerRepository.save(updateCustomer);
