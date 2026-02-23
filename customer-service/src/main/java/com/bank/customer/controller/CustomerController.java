@@ -6,15 +6,18 @@ import com.bank.customer.dto.UpdateCustomerRequest;
 import com.bank.customer.service.CustomerService;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/")
+@Validated
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -31,13 +34,13 @@ public class CustomerController {
     }
 
     @GetMapping("customers/{id}")
-    public ResponseEntity<CustomerResponse> findCustomerById(@PathVariable UUID id){
+    public ResponseEntity<CustomerResponse> findCustomerById(@NotNull(message = "Id is not valid") @PathVariable UUID id){
         CustomerResponse response = customerService.getCustomerById(id);
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("customers/{id}")
-    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable UUID id, @Valid @RequestBody UpdateCustomerRequest request){
+    public ResponseEntity<CustomerResponse> updateCustomer(@NotNull(message = "Id is not valid") @PathVariable UUID id, @Valid @RequestBody UpdateCustomerRequest request){
         CustomerResponse response = customerService.updateCustomer(request, id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
